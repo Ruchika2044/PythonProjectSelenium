@@ -1,0 +1,12 @@
+class Locators:
+    first_name_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[1]/div[1]/input"
+    last_name_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[2]/div[1]/input"
+    password_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[4]/div/input"
+    confirm_password_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[5]/div[1]/input"
+    email_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[3]/div/input"
+    phone_number_field = "/html/body/div[1]/div/div/div/div[1]/div/form/div[6]/div/div/div/input"
+    checkbox_label="/html/body/div[1]/div/div/div/div[1]/div/form/div[7]/label"
+    desc_label="/html/body/div[1]/div[2]/div/div[2]/div[1]/div[2]/div/div[2]/div/textarea[1]"
+    date_of_birth_label="/html/body/div[1]/div[2]/div/div[2]/div[1]/div[2]/div/div[3]/div[2]/div/div/div/div/div/div/input"
+    gender_label="/html/body/div[1]/div[2]/div/div[2]/div[1]/div[2]/div/div[3]/div[3]/div/div/div/input"
+    nationality="/html/body/div[1]/div[2]/div/div[2]/div[1]/div[2]/div/div[4]/div/div/input"

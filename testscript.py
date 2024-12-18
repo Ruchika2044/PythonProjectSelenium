@@ -5,11 +5,13 @@ import re
 from selenium.webdriver.common.by import By
 from seleniumbase import BaseCase
 
+from locators import Locators
+
 
 class JobApplicationTest(BaseCase):
     """Automated script to register, verify email, and apply for a job."""
 
-    def setUp(self):
+    def set_up_script(self):
         """Setup base URL and test preconditions."""
         self.base_url = "https://mcitcareerssd.elevatus.io/"
         self.email_service_url = "https://www.gmail.com/"
@@ -58,14 +60,14 @@ class JobApplicationTest(BaseCase):
         password = self.generate_random_password()
 
         # Fill the registration form
-        self.type("//input[@placeholder='First Name']", first_name)
-        self.type("//input[@placeholder='Last Name']", last_name)
-        self.type("//input[@placeholder='Email']", email)
-        self.type("//input[@placeholder='Password']", password)
-        self.type("//input[@placeholder='Confirm Password']", password)
-        self.type("//input[@placeholder='Phone Number']", "98912969")
+        self.type(Locators.first_name_field, first_name)
+        self.type(Locators.last_name_field, last_name)
+        self.type(Locators.email_field, email)
+        self.type(Locators.password_field, password)
+        self.type(Locators.confirm_password_field, password)
+        self.type(Locators.phone_number_field, "98912969")
 
-        self.click("//label[contains(@class, 'checkbox')]")
+        self.click(Locators.checkbox_label)  # Assuming this is the checkbox ID
         self.click("button:contains('Sign up')")
 
         print(f"Registered with email: {email} and password: {password}")
@@ -84,7 +86,7 @@ class JobApplicationTest(BaseCase):
         # Search for the email
         self.wait_for_element("input[aria-label='Search mail']", timeout=10)
         self.type("input[aria-label='Search mail']", email_subject)
-        self.press_enter("input[aria-label='Search mail']")
+        # self.press_enter("input[aria-label='Search mail']")
 
         # Click the first email in the search results
         self.wait_for_element("//tr[contains(@class, 'zA')]", timeout=20)
@@ -102,10 +104,11 @@ class JobApplicationTest(BaseCase):
         self.click("button:contains('Apply')")
 
         # Fill out application details
-        self.type("textarea", "I am excited to apply for this position.")
-        self.type("//input[@type='date']", "1985-05-22")
-        self.type("//input[@placeholder='Gender']", "Female")
-        self.type("//input[@placeholder='Nationality']", "Indian")
+        self.type(Locators.desc_label, "I am excited to apply for this position.")
+        self.type(Locators.date_of_birth_label, "1985-05-22")
+        self.type(Locators.gender_label, "Female")
+        self.type(Locators.nationality, "Indian")
+        self.click("label:contains('Drag and drop or click to upload your CV')")  # Adjust selector if needed
 
         # Upload resume
         self.choose_file("input[type='file']", self.resume_path)
@@ -114,7 +117,7 @@ class JobApplicationTest(BaseCase):
 
         # Submit application
         self.click("button:contains('Submit')")
-        if self.is_element_visible("button:contains('Confirm')", timeout=10):
+        if self.is_element_visible("button:contains('Confirm')", 10):
             self.click("button:contains('Confirm')")
         if self.is_alert_present():
             self.accept_alert()

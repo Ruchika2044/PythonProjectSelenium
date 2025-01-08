@@ -31,6 +31,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
+from locators import Locators
+
 
 class JobApplicationTest(BaseCase):
     imap_host = "imap.gmail.com"
@@ -93,15 +95,7 @@ class JobApplicationTest(BaseCase):
         # Step 1: Navigate to the website
         self.open("https://mcitcareerssd.elevatus.io/")
         self.close_cookie_popup()
-        #
-        # cookie_button = WebDriverWait(self.driver, 10).until(
-        #     EC.element_to_be_clickable(
-        #         (By.XPATH,
-        #          "//button[contains(text(), 'Accept') or contains(text(), 'Agree') or contains(text(), 'Close')]")
-        #     )
-        # )
-        # # Click the cookie button
-        # cookie_button.click()
+
 
         self.assert_title("Career portal")  # Validation 1: Ensure correct page title
 
@@ -121,21 +115,21 @@ class JobApplicationTest(BaseCase):
         phone_number = "98912969"  # Example phone number
 
         # Fill out the registration form
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[1]/div[1]/input", first_name)  # Validation 2: Ensure first name is entered
+        self.type(Locators.first_name_field, first_name)  # Validation 2: Ensure first name is entered
         assert first_name.isalpha()  # Validation 7: First name contains only letters
 
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[2]/div[1]/input", last_name)  # Validation 3: Ensure last name is entered
+        self.type(Locators.last_name_field, last_name)  # Validation 3: Ensure last name is entered
         assert last_name.isalpha()  # Validation 7: First name contains only letters
 
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[3]/div/input", email)  # Validation 4: Ensure email is entered
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[4]/div/input", password)
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[5]/div[1]/input", password)
+        self.type(Locators.email_field, email)  # Validation 4: Ensure email is entered
+        self.type(Locators.password_field, password)
+        self.type(Locators.confirm_password_field, password)
         # Validation: Ensure password and confirm password match
-        confirm_password = self.get_value("/html/body/div[1]/div/div/div/div[1]/div/form/div[5]/div[1]/input")
+        confirm_password = self.get_value(Locators.confirm_password_field)
         self.assert_equal(password, confirm_password, "Password and Confirm Password do not match!")
 
-        self.type("/html/body/div[1]/div/div/div/div[1]/div/form/div[6]/div/div/div/input", phone_number)  # Enter phone number
-        self.click("/html/body/div[1]/div/div/div/div[1]/div/form/div[7]/label")  # Assuming this is the checkbox ID
+        self.type(Locators.phone_number_field, phone_number)  # Enter phone number
+        self.click(Locators.checkbox_label)  # Assuming this is the checkbox ID
 
         self.click("button:contains('Sign up')")  # Submit registration form
         self.verify_email()
